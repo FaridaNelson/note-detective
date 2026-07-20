@@ -33,9 +33,9 @@ function CheckButton({ children, active = false }) {
   );
 }
 
-export default function SettingsDialog() {
+export default function SettingsDialog({ isOpen, onClose, returnFocusRef }) {
   return (
-    <DialogShell title="Settings">
+    <DialogShell title="Settings" isOpen={isOpen} onClose={onClose} returnFocusRef={returnFocusRef}>
       <ToggleGroup label="Session length" options={SESSION_LENGTHS} activeOption="Practice" />
 
       <div className="settings-group">

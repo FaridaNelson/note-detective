@@ -95,7 +95,7 @@
 }
 
 .profile-menu-shell {
-  display: none;
+  display: block;
   position: absolute;
   top: calc(100% + 8px);
   right: 0;

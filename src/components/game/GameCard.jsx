@@ -6,7 +6,7 @@ import SessionControls from "./SessionControls";
 import StaffDisplay from "./StaffDisplay";
 import StatsRow from "./StatsRow";
 
-export default function GameCard({ stats }) {
+export default function GameCard({ stats, onOpenResults, resultsButtonRef }) {
   return (
     <section className="game-card" aria-label="Note Detective practice surface">
       <StatsRow stats={stats} />
@@ -17,7 +17,7 @@ export default function GameCard({ stats }) {
       </div>
       <FeedbackMessage />
       <PianoKeyboard />
-      <SessionControls />
+      <SessionControls onOpenResults={onOpenResults} resultsButtonRef={resultsButtonRef} />
     </section>
   );
 }

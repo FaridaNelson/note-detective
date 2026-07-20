@@ -1,3 +1,5 @@
+import { forwardRef } from "react";
+
 const ICON_PATHS = {
   results: (
     <>
@@ -14,12 +16,14 @@ const ICON_PATHS = {
   ),
 };
 
-export default function IconButton({ icon, label }) {
+const IconButton = forwardRef(function IconButton({ icon, label, onClick }, ref) {
   return (
-    <button className="icon-button" type="button" aria-label={label}>
+    <button ref={ref} className="icon-button" type="button" aria-label={label} onClick={onClick}>
       <svg viewBox="0 0 24 24" aria-hidden="true">
         {ICON_PATHS[icon]}
       </svg>
     </button>
   );
-}
+});
+
+export default IconButton;
