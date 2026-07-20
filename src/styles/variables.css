@@ -1,9 +1,10 @@
 :root {
   /* Core surfaces */
-  --bg: #111316;
-  --surface: #273246;
-  --surface-soft: #1b212c;
+  --bg: #0e0d0b;
+  --surface: #1a1815;
+  --surface-soft: #232019;
   --surface-cta: #ff6b00;
+  --surface-topbar: #0f1419;
 
   /* Typography */
   --font-sans: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont,
@@ -11,17 +12,17 @@
   --font-serif: "Cormorant Garamond", Georgia, serif;
 
   /* Text */
-  --text: #f1f5f9;
-  --text-muted: #b8c2cc;
+  --text: #f4efe6;
+  --text-muted: #9a9385;
   --text-dark: #1c1a17;
 
   /* Borders */
-  --border: #3a465c;
-  --border-soft: rgba(241, 245, 249, 0.12);
+  --border: rgba(233, 221, 196, 0.12);
+  --border-soft: rgba(233, 221, 196, 0.07);
 
   /* Brand accents */
-  --accent: #ff6b00;
-  --accent-hover: #e85f00;
+  --accent: #c9a84c;
+  --accent-hover: #e8d49a;
 
   /* Refined educational tokens */
   --cream: #faf7f2;
@@ -34,15 +35,16 @@
   --gold: #c9a84c;
   --gold-light: #e8d49a;
   --gold-pale: #f5edd0;
+  --gold-dim: #3a3320;
 
   --rose: #d4806a;
-  --sage: #7a9e87;
+  --sage: #8fbe9c;
   --sage-pale: #ebf3ee;
 
   /* Shape */
   --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
   --radius-pill: 999px;
 
   /* Spacing */
@@ -53,5 +55,6 @@
   --gap-5: 48px;
 
   /* Effects */
-  --shadow-card: 0 18px 48px rgba(0, 0, 0, 0.28);
+  --shadow-card: 0 14px 44px rgba(0, 0, 0, 0.45);
+  --shadow-dialog: 0 24px 70px rgba(0, 0, 0, 0.6);
 }

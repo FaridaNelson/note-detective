@@ -1,0 +1,317 @@
+.dialog-shell {
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: var(--shadow-dialog);
+}
+
+.dialog-shell__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-2);
+  margin-bottom: 20px;
+}
+
+.dialog-shell h2 {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 1.625rem;
+  font-weight: 500;
+}
+
+.dialog-shell__close {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1.375rem;
+  line-height: 1;
+  transition:
+    color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.dialog-shell__close:hover,
+.dialog-shell__close:focus-visible {
+  color: var(--text);
+}
+
+.dialog-shell__close:active {
+  transform: scale(0.94);
+}
+
+.dialog-note,
+.settings-group__hint {
+  margin: 0 0 10px;
+  color: var(--text-muted);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+}
+
+.settings-group {
+  margin-bottom: 22px;
+}
+
+.settings-group__label {
+  margin: 0 0 6px;
+  color: var(--gold);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.toggle-group,
+.check-row {
+  display: flex;
+  gap: 6px;
+}
+
+.toggle-button,
+.check-button {
+  flex: 1;
+  min-width: 0;
+  padding: 11px 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-soft);
+  color: var(--text);
+  font-size: 0.78125rem;
+  font-weight: 600;
+  text-align: center;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.toggle-button:hover,
+.toggle-button:focus-visible,
+.check-button:hover,
+.check-button:focus-visible {
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+
+.toggle-button.is-active:hover,
+.toggle-button.is-active:focus-visible {
+  color: var(--bg);
+}
+
+.toggle-button:active,
+.check-button:active {
+  transform: translateY(1px);
+}
+
+.toggle-button.is-active {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--bg);
+}
+
+.check-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.check-button.is-active {
+  border-color: var(--gold);
+  background: var(--gold-dim);
+}
+
+.check-button__box {
+  display: grid;
+  width: 16px;
+  height: 16px;
+  place-items: center;
+  border: 1.5px solid var(--text-muted);
+  border-radius: 4px;
+  color: var(--bg);
+  font-size: 0.6875rem;
+}
+
+.check-button.is-active .check-button__box {
+  border-color: var(--gold);
+  background: var(--gold);
+}
+
+.range-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) auto repeat(2, minmax(0, 1fr));
+  align-items: end;
+  gap: 6px;
+}
+
+.range-row label {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.range-row label span {
+  color: var(--text-muted);
+  font-size: 0.625rem;
+}
+
+.range-row select {
+  width: 100%;
+  min-width: 0;
+  padding: 9px 8px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface-soft);
+  color: var(--text);
+  text-align: center;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.range-row select:hover,
+.range-row select:focus-visible {
+  border-color: var(--gold);
+}
+
+.range-row__arrow {
+  padding-bottom: 9px;
+  color: var(--text-muted);
+}
+
+.range-preview {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(18, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 12px;
+  padding-bottom: 18px;
+}
+
+.range-preview span {
+  height: 42px;
+  border: 1px solid var(--bg);
+  border-radius: 2px;
+  background: var(--cream);
+}
+
+.range-preview span.is-selected {
+  background: var(--gold);
+}
+
+.range-preview strong {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: var(--text-muted);
+  font-size: 0.625rem;
+}
+
+.apply-button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 11px;
+  background: var(--gold);
+  color: var(--bg);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  transition:
+    opacity 0.15s ease,
+    transform 0.1s ease;
+}
+
+.apply-button:hover,
+.apply-button:focus-visible {
+  opacity: 0.92;
+}
+
+.apply-button:active {
+  transform: translateY(1px);
+}
+
+.session-banner {
+  display: grid;
+  gap: 3px;
+  margin-bottom: 14px;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-soft);
+  text-align: center;
+}
+
+.session-banner strong {
+  color: var(--gold);
+  font-family: var(--font-serif);
+  font-size: 1.4375rem;
+}
+
+.session-banner span {
+  color: var(--text-muted);
+  font-size: 0.6875rem;
+}
+
+.results-empty {
+  padding: 24px 0;
+  color: var(--text-muted);
+  font-size: 0.78125rem;
+  text-align: center;
+}
+
+.reset-button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 13px;
+  border: 1px solid var(--rose);
+  border-radius: 11px;
+  background: transparent;
+  color: var(--rose);
+  font-size: 0.78125rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.reset-button:hover,
+.reset-button:focus-visible {
+  background: var(--rose);
+  color: var(--bg);
+}
+
+.reset-button:active {
+  transform: translateY(1px);
+}
+
+@media (max-width: 390px) {
+  .dialog-shell {
+    padding: 20px 18px;
+  }
+
+  .toggle-group,
+  .check-row {
+    flex-wrap: wrap;
+  }
+
+  .toggle-button,
+  .check-button {
+    flex-basis: calc(50% - 3px);
+  }
+
+  .range-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .range-row__arrow {
+    display: none;
+  }
+}
