@@ -8,6 +8,17 @@ import { generateTargetNote } from "../music/noteGenerator.js";
 import { getPitchClass } from "../music/targetNote.js";
 import useSessionTimer from "./useSessionTimer.js";
 
+function formatTime(seconds) {
+  if (seconds === null) {
+    return "∞";
+  }
+
+  const minutes = Math.floor(seconds / 60);
+  const remainder = String(seconds % 60).padStart(2, "0");
+
+  return `${minutes}:${remainder}`;
+}
+
 export default function useGameSession() {
   const [settings, setSettings] = useState(DEFAULT_GAME_SETTINGS);
   const [state, dispatch] = useReducer(sessionReducer, initialSessionState);
@@ -101,7 +112,15 @@ export default function useGameSession() {
     { label: "Accuracy", value: `${calculateAccuracy(state.correctCount, state.incorrectCount)}%` },
     { label: "Streak", value: String(state.streak), tone: "streak" },
     { label: "Best", value: String(state.bestStreak) },
-  ], [state.bestStreak, state.correctCount, state.incorrectCount, state.score, state.streak]);
+    { label: "Time", value: formatTime(state.timeLeft) },
+  ], [
+    state.bestStreak,
+    state.correctCount,
+    state.incorrectCount,
+    state.score,
+    state.streak,
+    state.timeLeft,
+  ]);
 
   const pianoKeys = useMemo(() => {
     const useFlats = state.targetNote?.accidental === -1;
@@ -139,6 +158,12 @@ export default function useGameSession() {
   return {
     settings,
     state,
+    feedback: state.feedback,
+    summary: state.lastSummary,
+    noteStats: state.noteStats,
+    status: state.status,
+    timeLeft: state.timeLeft,
+    timeDisplay: formatTime(state.timeLeft),
     stats,
     pianoKeys,
     targetNote: state.targetNote,
