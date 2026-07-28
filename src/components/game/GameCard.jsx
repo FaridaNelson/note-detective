@@ -6,18 +6,18 @@ import SessionControls from "./SessionControls";
 import StaffDisplay from "./StaffDisplay";
 import StatsRow from "./StatsRow";
 
-export default function GameCard({ stats, onOpenResults, resultsButtonRef }) {
+export default function GameCard({ game, onOpenResults, resultsButtonRef }) {
   return (
     <section className="game-card" aria-label="Note Detective practice surface">
-      <StatsRow stats={stats} />
-      <StaffDisplay />
+      <StatsRow stats={game.stats} />
+      <StaffDisplay targetNote={game.targetNote} ledgerLimit={game.settings.ledger} />
       <div className="game-card__meta">
-        <ReplayControl />
-        <ClefLabel />
+        <ReplayControl targetNote={game.targetNote} />
+        <ClefLabel clef={game.targetNote?.clef} />
       </div>
-      <FeedbackMessage />
-      <PianoKeyboard />
-      <SessionControls onOpenResults={onOpenResults} resultsButtonRef={resultsButtonRef} />
+      <FeedbackMessage feedback={game.feedback} />
+      <PianoKeyboard keys={game.pianoKeys} disabled={game.isInputLocked} onKeyPress={game.submitAnswer} />
+      <SessionControls onStop={game.stopSession} onOpenResults={onOpenResults} resultsButtonRef={resultsButtonRef} />
     </section>
   );
 }

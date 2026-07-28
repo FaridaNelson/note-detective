@@ -1,30 +1,42 @@
+import { useState } from "react";
+
+import { LEDGER_OPTIONS, OCTAVE_OPTIONS, SESSION_LENGTH_OPTIONS, isValidRange } from "../../music/noteRanges";
+import { LETTERS } from "../../music/notes";
 import DialogShell from "./DialogShell";
 
-const SESSION_LENGTHS = ["Practice", "1 min", "2 min", "3 min", "5 min"];
-const LEDGER_LINES = ["1", "2", "3", "4"];
-
-function ToggleGroup({ label, options, activeOption }) {
+function ToggleGroup({ label, options, activeValue, getLabel = (option) => option, getValue = (option) => option, onSelect }) {
   return (
     <div className="settings-group">
       <p className="settings-group__label">{label}</p>
       <div className="toggle-group" role="group" aria-label={label}>
-        {options.map((option) => (
-          <button
-            key={option}
-            className={option === activeOption ? "toggle-button is-active" : "toggle-button"}
-            type="button"
-          >
-            {option}
-          </button>
-        ))}
+        {options.map((option) => {
+          const value = getValue(option);
+
+          return (
+            <button
+              key={value}
+              className={value === activeValue ? "toggle-button is-active" : "toggle-button"}
+              type="button"
+              aria-pressed={value === activeValue}
+              onClick={() => onSelect(value)}
+            >
+              {getLabel(option)}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
 }
 
-function CheckButton({ children, active = false }) {
+function CheckButton({ children, active = false, onClick }) {
   return (
-    <button className={active ? "check-button is-active" : "check-button"} type="button">
+    <button
+      className={active ? "check-button is-active" : "check-button"}
+      type="button"
+      aria-pressed={active}
+      onClick={onClick}
+    >
       <span className="check-button__box" aria-hidden="true">
         {active ? "✓" : ""}
       </span>
@@ -33,10 +45,66 @@ function CheckButton({ children, active = false }) {
   );
 }
 
-export default function SettingsDialog({ isOpen, onClose, returnFocusRef }) {
+function SelectField({ label, value, options, onChange, ariaLabel }) {
   return (
-    <DialogShell title="Settings" isOpen={isOpen} onClose={onClose} returnFocusRef={returnFocusRef}>
-      <ToggleGroup label="Session length" options={SESSION_LENGTHS} activeOption="Practice" />
+    <label>
+      <span>{label}</span>
+      <select value={value} aria-label={ariaLabel} onChange={(event) => onChange(event.target.value)}>
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
+function SettingsForm({ settings, onApply, onClose }) {
+  const [draft, setDraft] = useState(settings);
+  const rangeIsValid = isValidRange(draft.low, draft.high);
+  const toggleClef = (clef) => {
+    setDraft((current) => {
+      const hasClef = current.clefs.includes(clef);
+
+      if (hasClef && current.clefs.length === 1) {
+        return current;
+      }
+
+      return {
+        ...current,
+        clefs: hasClef ? current.clefs.filter((item) => item !== clef) : [...current.clefs, clef],
+      };
+    });
+  };
+  const updateRange = (side, field, value) => {
+    setDraft((current) => ({
+      ...current,
+      [side]: {
+        ...current[side],
+        [field]: field === "octave" ? Number(value) : value,
+      },
+    }));
+  };
+  const handleApply = () => {
+    if (!rangeIsValid) {
+      return;
+    }
+
+    onApply(draft);
+    onClose();
+  };
+
+  return (
+    <>
+      <ToggleGroup
+        label="Session length"
+        options={SESSION_LENGTH_OPTIONS}
+        activeValue={draft.minutes}
+        getLabel={(option) => option.label}
+        getValue={(option) => option.minutes}
+        onSelect={(minutes) => setDraft((current) => ({ ...current, minutes }))}
+      />
 
       <div className="settings-group">
         <p className="settings-group__label">Clef</p>
@@ -44,49 +112,49 @@ export default function SettingsDialog({ isOpen, onClose, returnFocusRef }) {
           Pick one or both. With both, each note can appear in either clef.
         </p>
         <div className="check-row">
-          <CheckButton active>Treble</CheckButton>
-          <CheckButton>Bass</CheckButton>
+          <CheckButton active={draft.clefs.includes("treble")} onClick={() => toggleClef("treble")}>
+            Treble
+          </CheckButton>
+          <CheckButton active={draft.clefs.includes("bass")} onClick={() => toggleClef("bass")}>
+            Bass
+          </CheckButton>
         </div>
       </div>
 
       <div className="settings-group">
         <p className="settings-group__label">Note range</p>
         <div className="range-row">
-          <label>
-            <span>Lowest</span>
-            <select defaultValue="C" aria-label="Lowest note letter">
-              {["C", "D", "E", "F", "G", "A", "B"].map((letter) => (
-                <option key={letter}>{letter}</option>
-              ))}
-            </select>
-          </label>
-          <label>
-            <span>Octave</span>
-            <select defaultValue="4" aria-label="Lowest note octave">
-              {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((octave) => (
-                <option key={octave}>{octave}</option>
-              ))}
-            </select>
-          </label>
+          <SelectField
+            label="Lowest"
+            value={draft.low.letter}
+            options={LETTERS}
+            ariaLabel="Lowest note letter"
+            onChange={(value) => updateRange("low", "letter", value)}
+          />
+          <SelectField
+            label="Octave"
+            value={draft.low.octave}
+            options={OCTAVE_OPTIONS}
+            ariaLabel="Lowest note octave"
+            onChange={(value) => updateRange("low", "octave", value)}
+          />
           <span className="range-row__arrow" aria-hidden="true">
             →
           </span>
-          <label>
-            <span>Highest</span>
-            <select defaultValue="C" aria-label="Highest note letter">
-              {["C", "D", "E", "F", "G", "A", "B"].map((letter) => (
-                <option key={letter}>{letter}</option>
-              ))}
-            </select>
-          </label>
-          <label>
-            <span>Octave</span>
-            <select defaultValue="5" aria-label="Highest note octave">
-              {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((octave) => (
-                <option key={octave}>{octave}</option>
-              ))}
-            </select>
-          </label>
+          <SelectField
+            label="Highest"
+            value={draft.high.letter}
+            options={LETTERS}
+            ariaLabel="Highest note letter"
+            onChange={(value) => updateRange("high", "letter", value)}
+          />
+          <SelectField
+            label="Octave"
+            value={draft.high.octave}
+            options={OCTAVE_OPTIONS}
+            ariaLabel="Highest note octave"
+            onChange={(value) => updateRange("high", "octave", value)}
+          />
         </div>
         <div className="range-preview" aria-label="Selected keyboard range preview">
           {Array.from({ length: 18 }, (_, index) => (
@@ -94,23 +162,57 @@ export default function SettingsDialog({ isOpen, onClose, returnFocusRef }) {
           ))}
           <strong>Middle C</strong>
         </div>
+        {!rangeIsValid && (
+          <p className="settings-error" role="alert">
+            Lowest note must be below the highest.
+          </p>
+        )}
       </div>
 
-      <ToggleGroup label="Ledger lines" options={LEDGER_LINES} activeOption="1" />
+      <ToggleGroup
+        label="Ledger lines"
+        options={LEDGER_OPTIONS}
+        activeValue={draft.ledger}
+        onSelect={(ledger) => setDraft((current) => ({ ...current, ledger }))}
+      />
 
       <div className="settings-group">
         <p className="settings-group__label">Accidentals</p>
         <div className="check-row">
-          <CheckButton>Sharp notes</CheckButton>
-          <CheckButton>Flat notes</CheckButton>
+          <CheckButton active={draft.sharps} onClick={() => setDraft((current) => ({ ...current, sharps: !current.sharps }))}>
+            Sharp notes
+          </CheckButton>
+          <CheckButton active={draft.flats} onClick={() => setDraft((current) => ({ ...current, flats: !current.flats }))}>
+            Flat notes
+          </CheckButton>
         </div>
       </div>
 
-      <ToggleGroup label="Show key names" options={["Show", "Hide"]} activeOption="Show" />
+      <ToggleGroup
+        label="Show key names"
+        options={[
+          { label: "Show", value: true },
+          { label: "Hide", value: false },
+        ]}
+        activeValue={draft.showNames}
+        getLabel={(option) => option.label}
+        getValue={(option) => option.value}
+        onSelect={(showNames) => setDraft((current) => ({ ...current, showNames }))}
+      />
 
-      <button className="apply-button" type="button">
+      <button className="apply-button" type="button" disabled={!rangeIsValid} onClick={handleApply}>
         Apply &amp; restart
       </button>
+    </>
+  );
+}
+
+export default function SettingsDialog({ isOpen, settings, onApply, onClose, returnFocusRef }) {
+  const draftKey = JSON.stringify(settings);
+
+  return (
+    <DialogShell title="Settings" isOpen={isOpen} onClose={onClose} returnFocusRef={returnFocusRef}>
+      {isOpen && <SettingsForm key={draftKey} settings={settings} onApply={onApply} onClose={onClose} />}
     </DialogShell>
   );
 }
