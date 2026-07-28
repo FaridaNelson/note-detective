@@ -6,6 +6,22 @@ Unlike feature documentation or architecture specifications, these logs capture 
 
 ---
 
+## File Naming Convention
+
+Development logs use the following format:
+
+```
+YYYY-MM-DD-short-topic.md
+```
+
+Examples:
+
+- 2026-07-12-repository-foundation.md
+- 2026-07-19-phase2-ui.md
+- 2026-07-27-phase4-gameplay-ui.md
+
+---
+
 ## Development Timeline
 
 ### 2026-07-12 — Repository Foundation
@@ -21,6 +37,14 @@ Established Note Detective as a standalone educational application with a clear 
 **Document:** [2026-07-19-phase2-ui.md](2026-07-19-phase2-ui.md)
 
 Implemented production-quality dialog architecture, accessibility, keyboard interaction, focus management, and validated the secure AI-assisted development workflow using PulseForge and OpenClaw.
+
+---
+
+### 2026-07-27 — Phase 4 Gameplay UI
+
+**Document:** [2026-07-27-phase4-gameplay-ui.md](2026-07-27-phase4-gameplay-ui.md)
+
+Completed Phase 4 gameplay UI wiring, integrated game session state, added reusable gameplay utilities and tests, connected the guest experience to StudioPulse authentication, and merged the implementation into `main`.
 
 ---
 
