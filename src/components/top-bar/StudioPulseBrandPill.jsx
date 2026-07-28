@@ -1,6 +1,10 @@
 export default function StudioPulseBrandPill() {
   return (
-    <div className="brand-pill" aria-label="StudioPulse">
+    <a
+      className="brand-pill"
+      href="https://studiopulse.co"
+      aria-label="Go to StudioPulse home page"
+    >
       <svg width="38" height="16" viewBox="0 0 38 16" aria-hidden="true">
         <line
           x1="0"
@@ -31,9 +35,10 @@ export default function StudioPulseBrandPill() {
           opacity="0.5"
         />
       </svg>
+
       <span>
         STUDIO <strong>PULSE</strong>
       </span>
-    </div>
+    </a>
   );
 }

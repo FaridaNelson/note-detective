@@ -3,10 +3,17 @@ import { useEffect, useRef } from "react";
 const MENU_ID = "guest-profile-menu";
 
 function getMenuItems(menuElement) {
-  return Array.from(menuElement.querySelectorAll('[role="menuitem"]:not([disabled])'));
+  return Array.from(
+    menuElement.querySelectorAll('[role="menuitem"]:not([disabled])'),
+  );
 }
 
-export default function ProfileChipMenu({ isOpen, onClose, onToggle, triggerRef }) {
+export default function ProfileChipMenu({
+  isOpen,
+  onClose,
+  onToggle,
+  triggerRef,
+}) {
   const wrapRef = useRef(null);
   const menuRef = useRef(null);
   const openedFromKeyboardRef = useRef(false);
@@ -74,7 +81,10 @@ export default function ProfileChipMenu({ isOpen, onClose, onToggle, triggerRef 
     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
       event.preventDefault();
       const offset = event.key === "ArrowDown" ? 1 : -1;
-      const nextIndex = activeIndex === -1 ? 0 : (activeIndex + offset + menuItems.length) % menuItems.length;
+      const nextIndex =
+        activeIndex === -1
+          ? 0
+          : (activeIndex + offset + menuItems.length) % menuItems.length;
       menuItems[nextIndex].focus();
     } else if (event.key === "Home") {
       event.preventDefault();
@@ -82,7 +92,10 @@ export default function ProfileChipMenu({ isOpen, onClose, onToggle, triggerRef 
     } else if (event.key === "End") {
       event.preventDefault();
       menuItems[menuItems.length - 1].focus();
-    } else if ((event.key === "Enter" || event.key === " ") && activeIndex !== -1) {
+    } else if (
+      (event.key === "Enter" || event.key === " ") &&
+      activeIndex !== -1
+    ) {
       event.preventDefault();
       menuItems[activeIndex].click();
     }
@@ -103,7 +116,10 @@ export default function ProfileChipMenu({ isOpen, onClose, onToggle, triggerRef 
       >
         <span className="profile-chip__avatar">G</span>
         <span>
-          Guest <span className="profile-chip__caret" aria-hidden="true">v</span>
+          Guest{" "}
+          <span className="profile-chip__caret" aria-hidden="true">
+            v
+          </span>
         </span>
       </button>
 
@@ -120,11 +136,17 @@ export default function ProfileChipMenu({ isOpen, onClose, onToggle, triggerRef 
             Playing as guest
           </p>
           <p className="profile-menu-shell__note" role="none">
-            Progress saves on this device only. Sign in to keep it in StudioPulse.
+            Progress saves on this device only. Sign in to keep it in
+            StudioPulse.
           </p>
-          <button className="profile-menu-shell__button" type="button" role="menuitem" onClick={onClose}>
+          <a
+            className="profile-menu-shell__button"
+            href="https://studiopulse.co/?openAuth=signin"
+            role="menuitem"
+            onClick={onClose}
+          >
             Sign in to StudioPulse
-          </button>
+          </a>
         </div>
       ) : null}
     </div>

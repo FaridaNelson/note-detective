@@ -35,7 +35,28 @@
   border-radius: 18px;
   background: rgba(201, 168, 76, 0.15);
   color: var(--gold-light);
-  white-space: nowrap;
+  white-space: nowrap;cursor: pointer;
+  text-decoration: none;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.1s ease;
+}
+
+.brand-pill:hover {
+  border-color: rgba(201, 168, 76, 0.55);
+  background: rgba(201, 168, 76, 0.22);
+  box-shadow: 0 4px 14px rgba(201, 168, 76, 0.1);
+}
+
+.brand-pill:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.brand-pill:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 3px;
 }
 
 .brand-pill span {
@@ -123,6 +144,12 @@
 }
 
 .profile-menu-shell__button {
+  display: block;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+
   width: 100%;
   padding: 10px;
   border: 1px solid var(--gold);
@@ -218,7 +245,7 @@
 
 .stats-row {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 7px;
   margin: 0 0 22px;
 }
@@ -272,8 +299,18 @@
   opacity: 0.9;
 }
 
+.staff-display__ledger {
+  stroke: var(--cream);
+  stroke-width: 1.5;
+}
+
 .staff-display__clef {
   fill: var(--cream);
+}
+
+.staff-display__accidental {
+  fill: var(--gold);
+  font-family: serif;
 }
 
 .staff-display__stem {
@@ -323,6 +360,11 @@
   transform: scale(0.96);
 }
 
+.replay-control:disabled {
+  cursor: default;
+  opacity: 0.58;
+}
+
 .replay-control svg {
   width: 14px;
   height: 14px;
@@ -353,6 +395,14 @@
   font-weight: 500;
   letter-spacing: 0.01em;
   text-align: center;
+}
+
+.feedback-message--correct {
+  color: var(--sage);
+}
+
+.feedback-message--incorrect {
+  color: var(--rose);
 }
 
 .piano-keyboard {
@@ -401,6 +451,20 @@
   background: #fff;
 }
 
+.piano-key--white.piano-key--correct,
+.piano-key--black.piano-key--correct {
+  border-color: var(--sage);
+  background: var(--sage);
+  color: var(--bg);
+}
+
+.piano-key--white.piano-key--incorrect,
+.piano-key--black.piano-key--incorrect {
+  border-color: var(--rose);
+  background: var(--rose);
+  color: var(--bg);
+}
+
 .piano-key--black {
   position: absolute;
   top: 0;
@@ -424,6 +488,10 @@
 
 .piano-key:active {
   transform: translateY(1px);
+}
+
+.piano-key:disabled {
+  cursor: default;
 }
 
 .session-controls {
